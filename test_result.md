@@ -234,10 +234,10 @@ metadata:
 
 test_plan:
   current_focus:
-    - "API endpoints for productos CRUD"
-    - "API endpoints for contactos CRUD"
-    - "Configuracion management endpoints"
-    - "Alertas system endpoint"
+    - "Main inventory table with Excel-like functionality"
+    - "Visual alert system for products"
+    - "Contactos management interface"
+    - "Panel de recordatorios (Alertas tab)"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
