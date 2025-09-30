@@ -152,15 +152,18 @@ backend:
 
   - task: "Alertas system endpoint"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/backend/server.py"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
         - working: "NA"
           agent: "main"
           comment: "Implemented dynamic alertas endpoint that categorizes products by stock_cero, stock_bajo, and proximo_vencer based on configurable thresholds"
+        - working: true
+          agent: "testing"
+          comment: "COMPREHENSIVE TESTING COMPLETED ✅ Alertas system working perfectly: GET endpoint returns proper alert structure with all required fields (id, codigo, descripcion, tipo_alerta, stock_actual, fecha_vencimiento, dias_para_vencer). Successfully tested all alert scenarios: stock_cero (products with 0 stock), stock_bajo (products below configurable threshold), proximo_vencer (products approaching expiration based on configurable months). Alert logic correctly uses configuration thresholds."
 
 frontend:
   - task: "Main inventory table with Excel-like functionality"
