@@ -117,9 +117,10 @@ class AlertaProducto(BaseModel):
 @api_router.post("/productos", response_model=Producto)
 async def crear_producto(producto: ProductoCreate):
     producto_dict = producto.dict()
-    producto_dict = prepare_for_mongo(producto_dict)
     producto_obj = Producto(**producto_dict)
-    await db.productos.insert_one(producto_obj.dict())
+    # Prepare the dict for MongoDB insertion (convert dates to strings)
+    mongo_dict = prepare_for_mongo(producto_obj.dict())
+    await db.productos.insert_one(mongo_dict)
     return producto_obj
 
 @api_router.get("/productos", response_model=List[Producto])
