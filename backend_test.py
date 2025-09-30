@@ -80,7 +80,7 @@ class InventoryAPITester:
                 "stock_actual": 50,
                 "precio_venta": 2.50,
                 "fecha_ingreso": "2024-01-15",
-                "fecha_vencimiento": "2025-01-15"
+                "fecha_vencimiento": "2025-06-15"  # Future date for proper testing
             },
             {
                 "codigo": "ACE002", 
@@ -89,7 +89,7 @@ class InventoryAPITester:
                 "stock_actual": 0,  # For stock_cero alert testing
                 "precio_venta": 8.75,
                 "fecha_ingreso": "2024-01-10",
-                "fecha_vencimiento": "2024-12-31"
+                "fecha_vencimiento": "2025-06-30"  # Future date
             },
             {
                 "codigo": "LEG003",
@@ -98,7 +98,16 @@ class InventoryAPITester:
                 "stock_actual": 5,  # For stock_bajo alert testing
                 "precio_venta": 3.25,
                 "fecha_ingreso": "2024-01-20",
-                "fecha_vencimiento": "2024-03-15"  # For proximo_vencer alert testing
+                "fecha_vencimiento": "2024-05-15"  # Near future for proximo_vencer alert testing
+            },
+            {
+                "codigo": "DEL001",
+                "descripcion": "Producto para eliminar",
+                "unidad_venta": "Unidades",
+                "stock_actual": 100,
+                "precio_venta": 1.00,
+                "fecha_ingreso": "2024-01-01",
+                "fecha_vencimiento": "2025-12-31"
             }
         ]
 
