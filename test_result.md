@@ -137,15 +137,18 @@ backend:
 
   - task: "Configuracion management endpoints"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/backend/server.py"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
         - working: "NA"
           agent: "main"
           comment: "Implemented configurable thresholds for stock_bajo_limite and vencimiento_alerta_meses"
+        - working: true
+          agent: "testing"
+          comment: "COMPREHENSIVE TESTING COMPLETED ✅ Configuracion endpoints working perfectly: GET creates default configuration if none exists (stock_bajo_limite=10, vencimiento_alerta_meses=2), PUT updates configuration correctly, configuration persistence verified. Tested threshold updates (15, 3) and confirmed they persist across requests."
 
   - task: "Alertas system endpoint"
     implemented: true
