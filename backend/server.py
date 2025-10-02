@@ -259,7 +259,7 @@ async def crear_producto(producto: ProductoCreate, current_user: Usuario = Depen
     return producto_obj
 
 @api_router.get("/productos", response_model=List[Producto])
-async def obtener_productos(skip: int = Query(0, ge=0), limit: int = Query(1000, le=3000)):
+async def obtener_productos(skip: int = Query(0, ge=0), limit: int = Query(1000, le=3000), current_user: Usuario = Depends(get_current_user)):
     productos = await db.productos.find().skip(skip).limit(limit).to_list(length=None)
     return [Producto(**parse_from_mongo(producto)) for producto in productos]
 
