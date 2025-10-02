@@ -89,6 +89,28 @@ async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(s
     return Usuario(**user)
 
 # Define Models
+class Usuario(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    username: str
+    nombre_completo: str
+    hashed_password: str
+    activo: bool = True
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+
+class UsuarioCreate(BaseModel):
+    username: str
+    nombre_completo: str
+    password: str
+
+class UsuarioLogin(BaseModel):
+    username: str
+    password: str
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+    user: dict
+
 class Producto(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     codigo: str
