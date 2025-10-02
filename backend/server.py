@@ -250,7 +250,7 @@ async def read_users_me(current_user: Usuario = Depends(get_current_user)):
 
 # PRODUCTOS ENDPOINTS
 @api_router.post("/productos", response_model=Producto)
-async def crear_producto(producto: ProductoCreate):
+async def crear_producto(producto: ProductoCreate, current_user: Usuario = Depends(get_current_user)):
     producto_dict = producto.dict()
     producto_obj = Producto(**producto_dict)
     # Prepare the dict for MongoDB insertion (convert dates to strings)
