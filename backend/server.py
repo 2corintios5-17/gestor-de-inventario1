@@ -183,6 +183,71 @@ class AlertaProducto(BaseModel):
     fecha_vencimiento: Optional[date]
     dias_para_vencer: Optional[int]
 
+# AUTHENTICATION ENDPOINTS
+@api_router.post("/register", response_model=dict)
+async def register(user: UsuarioCreate):
+    # Check if user already exists
+    existing_user = await db.usuarios.find_one({"username": user.username})
+    if existing_user:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="El usuario ya existe"
+        )
+    
+    # Create new user
+    hashed_password = get_password_hash(user.password)
+    user_dict = {
+        "id": str(uuid.uuid4()),
+        "username": user.username,
+        "nombre_completo": user.nombre_completo,
+        "hashed_password": hashed_password,
+        "activo": True,
+        "created_at": datetime.now(timezone.utc)
+    }
+    
+    await db.usuarios.insert_one(user_dict)
+    return {"message": "Usuario registrado exitosamente"}
+
+@api_router.post("/login", response_model=Token)
+async def login(user: UsuarioLogin):
+    # Check if user exists
+    db_user = await db.usuarios.find_one({"username": user.username})
+    if not db_user or not verify_password(user.password, db_user["hashed_password"]):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Credenciales incorrectas",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    
+    if not db_user["activo"]:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Usuario inactivo"
+        )
+    
+    # Create access token
+    access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    access_token = create_access_token(
+        data={"sub": user.username}, expires_delta=access_token_expires
+    )
+    
+    return {
+        "access_token": access_token,
+        "token_type": "bearer",
+        "user": {
+            "username": db_user["username"],
+            "nombre_completo": db_user["nombre_completo"]
+        }
+    }
+
+@api_router.get("/me", response_model=dict)
+async def read_users_me(current_user: Usuario = Depends(get_current_user)):
+    return {
+        "username": current_user.username,
+        "nombre_completo": current_user.nombre_completo,
+        "activo": current_user.activo
+    }
+
 # PRODUCTOS ENDPOINTS
 @api_router.post("/productos", response_model=Producto)
 async def crear_producto(producto: ProductoCreate):
