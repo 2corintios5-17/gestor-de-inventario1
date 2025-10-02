@@ -264,7 +264,7 @@ async def obtener_productos(skip: int = Query(0, ge=0), limit: int = Query(1000,
     return [Producto(**parse_from_mongo(producto)) for producto in productos]
 
 @api_router.get("/productos/{producto_id}", response_model=Producto)
-async def obtener_producto(producto_id: str):
+async def obtener_producto(producto_id: str, current_user: Usuario = Depends(get_current_user)):
     producto = await db.productos.find_one({"id": producto_id})
     if not producto:
         raise HTTPException(status_code=404, detail="Producto no encontrado")
