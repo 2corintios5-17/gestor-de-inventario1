@@ -271,7 +271,7 @@ async def obtener_producto(producto_id: str, current_user: Usuario = Depends(get
     return Producto(**parse_from_mongo(producto))
 
 @api_router.put("/productos/{producto_id}", response_model=Producto)
-async def actualizar_producto(producto_id: str, producto_update: ProductoUpdate):
+async def actualizar_producto(producto_id: str, producto_update: ProductoUpdate, current_user: Usuario = Depends(get_current_user)):
     update_dict = {k: v for k, v in producto_update.dict().items() if v is not None}
     if not update_dict:
         raise HTTPException(status_code=400, detail="No hay datos para actualizar")
