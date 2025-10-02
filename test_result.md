@@ -250,8 +250,10 @@ test_plan:
     - "Visual alert system for products"
     - "Contactos management interface"
     - "Panel de recordatorios (Alertas tab)"
+    - "Configuration interface"
+    - "Modal forms for CRUD operations"
   stuck_tasks: []
-  test_all: false
+  test_all: true
   test_priority: "high_first"
 
 agent_communication:
