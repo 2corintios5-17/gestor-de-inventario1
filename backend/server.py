@@ -299,7 +299,7 @@ async def eliminar_producto(producto_id: str, current_user: Usuario = Depends(ge
 
 # CONTACTOS ENDPOINTS
 @api_router.post("/contactos", response_model=Contacto)
-async def crear_contacto(contacto: ContactoCreate):
+async def crear_contacto(contacto: ContactoCreate, current_user: Usuario = Depends(get_current_user)):
     contacto_obj = Contacto(**contacto.dict())
     await db.contactos.insert_one(contacto_obj.dict())
     return contacto_obj
