@@ -12,6 +12,7 @@ import uuid
 from datetime import datetime, date, timezone, timedelta
 from dateutil.relativedelta import relativedelta
 from passlib.context import CryptContext
+import hashlib
 from jose import JWTError, jwt
 
 ROOT_DIR = Path(__file__).parent
