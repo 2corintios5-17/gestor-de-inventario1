@@ -327,7 +327,7 @@ async def actualizar_contacto(contacto_id: str, contacto_update: ContactoUpdate,
     return Contacto(**contacto_actualizado)
 
 @api_router.delete("/contactos/{contacto_id}")
-async def eliminar_contacto(contacto_id: str):
+async def eliminar_contacto(contacto_id: str, current_user: Usuario = Depends(get_current_user)):
     result = await db.contactos.delete_one({"id": contacto_id})
     if result.deleted_count == 0:
         raise HTTPException(status_code=404, detail="Contacto no encontrado")
