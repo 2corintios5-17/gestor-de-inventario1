@@ -335,7 +335,7 @@ async def eliminar_contacto(contacto_id: str, current_user: Usuario = Depends(ge
 
 # CONFIGURACIÓN ENDPOINTS
 @api_router.get("/configuracion", response_model=Configuracion)
-async def obtener_configuracion():
+async def obtener_configuracion(current_user: Usuario = Depends(get_current_user)):
     config = await db.configuracion.find_one()
     if not config:
         # Crear configuración por defecto
