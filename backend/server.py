@@ -370,7 +370,7 @@ async def actualizar_configuracion(config_update: ConfiguracionUpdate, current_u
 
 # ALERTAS Y RECORDATORIOS ENDPOINT
 @api_router.get("/alertas", response_model=List[AlertaProducto])
-async def obtener_alertas():
+async def obtener_alertas(current_user: Usuario = Depends(get_current_user)):
     # Obtener configuración
     config = await db.configuracion.find_one()
     if not config:
