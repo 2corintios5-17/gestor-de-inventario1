@@ -310,7 +310,7 @@ async def obtener_contactos(current_user: Usuario = Depends(get_current_user)):
     return [Contacto(**contacto) for contacto in contactos]
 
 @api_router.put("/contactos/{contacto_id}", response_model=Contacto)
-async def actualizar_contacto(contacto_id: str, contacto_update: ContactoUpdate):
+async def actualizar_contacto(contacto_id: str, contacto_update: ContactoUpdate, current_user: Usuario = Depends(get_current_user)):
     update_dict = {k: v for k, v in contacto_update.dict().items() if v is not None}
     if not update_dict:
         raise HTTPException(status_code=400, detail="No hay datos para actualizar")
