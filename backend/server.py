@@ -345,7 +345,7 @@ async def obtener_configuracion(current_user: Usuario = Depends(get_current_user
     return Configuracion(**config)
 
 @api_router.put("/configuracion", response_model=Configuracion)
-async def actualizar_configuracion(config_update: ConfiguracionUpdate):
+async def actualizar_configuracion(config_update: ConfiguracionUpdate, current_user: Usuario = Depends(get_current_user)):
     update_dict = {k: v for k, v in config_update.dict().items() if v is not None}
     if not update_dict:
         raise HTTPException(status_code=400, detail="No hay datos para actualizar")
