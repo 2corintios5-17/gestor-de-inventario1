@@ -291,7 +291,7 @@ async def actualizar_producto(producto_id: str, producto_update: ProductoUpdate,
     return Producto(**parse_from_mongo(producto_actualizado))
 
 @api_router.delete("/productos/{producto_id}")
-async def eliminar_producto(producto_id: str):
+async def eliminar_producto(producto_id: str, current_user: Usuario = Depends(get_current_user)):
     result = await db.productos.delete_one({"id": producto_id})
     if result.deleted_count == 0:
         raise HTTPException(status_code=404, detail="Producto no encontrado")
