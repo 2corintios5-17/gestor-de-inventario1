@@ -305,7 +305,7 @@ async def crear_contacto(contacto: ContactoCreate, current_user: Usuario = Depen
     return contacto_obj
 
 @api_router.get("/contactos", response_model=List[Contacto])
-async def obtener_contactos():
+async def obtener_contactos(current_user: Usuario = Depends(get_current_user)):
     contactos = await db.contactos.find().to_list(length=None)
     return [Contacto(**contacto) for contacto in contactos]
 
