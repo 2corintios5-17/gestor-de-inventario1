@@ -29,7 +29,6 @@ const AuthProvider = ({ children }) => {
     if (savedToken && savedUser) {
       setToken(savedToken);
       setUser(JSON.parse(savedUser));
-      // Set default axios header
       axios.defaults.headers.common['Authorization'] = `Bearer ${savedToken}`;
     }
     setLoading(false);
@@ -43,11 +42,8 @@ const AuthProvider = ({ children }) => {
       setToken(access_token);
       setUser(userData);
       
-      // Save to storage
-      Cookies.set('token', access_token, { expires: 1 }); // 1 day
+      Cookies.set('token', access_token, { expires: 1 });
       localStorage.setItem('user', JSON.stringify(userData));
-      
-      // Set default axios header
       axios.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
       
       return true;
@@ -124,88 +120,88 @@ const LoginForm = () => {
   };
 
   return (
-    <div className=\"min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8\">
-      <div className=\"max-w-md w-full space-y-8\">
-        <div className=\"text-center\">
-          <h2 className=\"text-3xl font-extrabold text-gray-900\">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full space-y-8">
+        <div className="text-center">
+          <h2 className="text-3xl font-extrabold text-gray-900">
             📦 Gestión de Inventario
           </h2>
-          <p className=\"mt-2 text-sm text-gray-600\">
+          <p className="mt-2 text-sm text-gray-600">
             {isLogin ? 'Inicia sesión en tu cuenta' : 'Crea una nueva cuenta'}
           </p>
         </div>
         
-        <div className=\"bg-white py-8 px-4 shadow-lg rounded-lg sm:px-10\">
-          <form className=\"space-y-6\" onSubmit={handleSubmit}>
+        <div className="bg-white py-8 px-4 shadow-lg rounded-lg sm:px-10">
+          <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
-              <label className=\"block text-sm font-medium text-gray-700\">
+              <label className="block text-sm font-medium text-gray-700">
                 Usuario *
               </label>
               <input
-                type=\"text\"
+                type="text"
                 required
                 value={formData.username}
                 onChange={(e) => setFormData(prev => ({ ...prev, username: e.target.value }))}
-                className=\"mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm\"
-                placeholder=\"Ingresa tu usuario\"
+                className="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+                placeholder="Ingresa tu usuario"
               />
             </div>
 
             {!isLogin && (
               <div>
-                <label className=\"block text-sm font-medium text-gray-700\">
+                <label className="block text-sm font-medium text-gray-700">
                   Nombre Completo *
                 </label>
                 <input
-                  type=\"text\"
+                  type="text"
                   required
                   value={formData.nombre_completo}
                   onChange={(e) => setFormData(prev => ({ ...prev, nombre_completo: e.target.value }))}
-                  className=\"mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm\"
-                  placeholder=\"Tu nombre completo\"
+                  className="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+                  placeholder="Tu nombre completo"
                 />
               </div>
             )}
 
             <div>
-              <label className=\"block text-sm font-medium text-gray-700\">
+              <label className="block text-sm font-medium text-gray-700">
                 Contraseña *
               </label>
               <input
-                type=\"password\"
+                type="password"
                 required
                 value={formData.password}
                 onChange={(e) => setFormData(prev => ({ ...prev, password: e.target.value }))}
-                className=\"mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm\"
-                placeholder=\"Tu contraseña\"
+                className="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+                placeholder="Tu contraseña"
               />
             </div>
 
             {error && (
-              <div className=\"text-red-600 text-sm text-center bg-red-50 p-2 rounded\">
+              <div className="text-red-600 text-sm text-center bg-red-50 p-2 rounded">
                 {error}
               </div>
             )}
 
             <div>
               <button
-                type=\"submit\"
+                type="submit"
                 disabled={loading}
-                className=\"group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors\"
+                className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
                 {loading ? 'Cargando...' : (isLogin ? 'Iniciar Sesión' : 'Registrarse')}
               </button>
             </div>
 
-            <div className=\"text-center\">
+            <div className="text-center">
               <button
-                type=\"button\"
+                type="button"
                 onClick={() => {
                   setIsLogin(!isLogin);
                   setError('');
                   setFormData({ username: '', password: '', nombre_completo: '' });
                 }}
-                className=\"text-blue-600 hover:text-blue-500 text-sm font-medium\"
+                className="text-blue-600 hover:text-blue-500 text-sm font-medium"
               >
                 {isLogin ? '¿No tienes cuenta? Regístrate' : '¿Ya tienes cuenta? Inicia sesión'}
               </button>
@@ -213,12 +209,12 @@ const LoginForm = () => {
           </form>
 
           {isLogin && (
-            <div className=\"mt-6 bg-blue-50 p-4 rounded-lg\">
-              <p className=\"text-sm text-blue-800 text-center\">
+            <div className="mt-6 bg-blue-50 p-4 rounded-lg">
+              <p className="text-sm text-blue-800 text-center">
                 💡 <strong>Demo:</strong> Usuario: <code>admin</code> | Contraseña: <code>admin123</code>
               </p>
-              <p className=\"text-xs text-blue-600 text-center mt-1\">
-                O crea una nueva cuenta usando \"Regístrate\"
+              <p className="text-xs text-blue-600 text-center mt-1">
+                O crea una nueva cuenta usando "Regístrate"
               </p>
             </div>
           )}
@@ -238,7 +234,7 @@ const InventoryApp = () => {
   const [configuracion, setConfiguracion] = useState({ stock_bajo_limite: 10, vencimiento_alerta_meses: 2 });
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [modalType, setModalType] = useState(''); // 'producto' o 'contacto'
+  const [modalType, setModalType] = useState('');
   const [editingItem, setEditingItem] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -488,7 +484,7 @@ const InventoryApp = () => {
     try {
       await axios.put(`${API}/configuracion`, nuevaConfig);
       setConfiguracion(prev => ({ ...prev, ...nuevaConfig }));
-      await cargarDatos(); // Recargar para actualizar alertas
+      await cargarDatos();
     } catch (error) {
       console.error('Error actualizando configuración:', error);
       if (error.response?.status === 401) {
@@ -498,418 +494,28 @@ const InventoryApp = () => {
   };
 
   return (
-    <div className=\"min-h-screen bg-gray-50\">
-      {/* Header with User Info */}
-      <div className=\"bg-white shadow-sm border-b\">
-        <div className=\"max-w-7xl mx-auto px-4 sm:px-6 lg:px-8\">
-          <div className=\"flex justify-between items-center py-4\">
-            <h1 className=\"text-2xl font-bold text-gray-900\">📦 Gestión de Inventario</h1>
-            <div className=\"flex items-center space-x-4\">
-              <div className=\"text-sm text-gray-600\">
-                Total productos: {productos.length} | Alertas: {alertas.length}
-              </div>
-              <div className=\"flex items-center space-x-3\">
-                <div className=\"text-sm\">
-                  <span className=\"text-gray-500\">Bienvenido,</span>
-                  <span className=\"font-medium text-gray-900 ml-1\">{user?.nombre_completo || user?.username}</span>
-                </div>
-                <button
-                  onClick={logout}
-                  className=\"text-sm bg-red-100 text-red-700 px-3 py-1 rounded-md hover:bg-red-200 transition-colors\"
-                >
-                  Cerrar Sesión
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Navigation Tabs */}
-      <div className=\"max-w-7xl mx-auto px-4 sm:px-6 lg:px-8\">
-        <div className=\"border-b border-gray-200\">
-          <nav className=\"-mb-px flex space-x-8\">
-            {[
-              { id: 'inventario', label: '📊 Inventario', count: productos.length },
-              { id: 'contactos', label: '👥 Contactos', count: contactos.length },
-              { id: 'alertas', label: '⚠️ Alertas', count: alertas.length },
-              { id: 'configuracion', label: '⚙️ Configuración' }
-            ].map(tab => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm ${
-                  activeTab === tab.id
-                    ? 'border-blue-500 text-blue-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                }`}
-              >
-                {tab.label} {tab.count !== undefined && `(${tab.count})`}
-              </button>
-            ))}
-          </nav>
-        </div>
-      </div>
-
-      {/* Main Content - Same as original but will be cut for brevity */}
-      <div className=\"max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6\">
-        {/* The rest of the tabs content remains exactly the same as the original */}
-        {/* For brevity, I'll include just the start - the full implementation continues... */}
-        
-        {/* Inventario Tab */}
-        {activeTab === 'inventario' && (
-          <div>
-            <div className=\"flex justify-between items-center mb-6\">
-              <div className=\"flex items-center space-x-4\">
-                <input
-                  type=\"text\"
-                  placeholder=\"Buscar productos...\"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className=\"px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent\"
-                />
-                <div className=\"text-sm text-gray-500\">
-                  Mostrando {productosFiltrados.length} productos
-                </div>
-              </div>
-              <button
-                onClick={() => abrirModalNuevo('producto')}
-                className=\"bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors\"
-              >
-                ➕ Nuevo Producto
-              </button>
-            </div>
-
-            {/* Leyenda de colores */}
-            <div className=\"mb-4 flex flex-wrap gap-4 text-sm\">
-              <div className=\"flex items-center space-x-2\">
-                <div className=\"w-4 h-4 bg-red-100 border border-red-300 rounded\"></div>
-                <span>Stock agotado</span>
-              </div>
-              <div className=\"flex items-center space-x-2\">
-                <div className=\"w-4 h-4 bg-yellow-100 border border-yellow-300 rounded\"></div>
-                <span>Stock bajo</span>
-              </div>
-              <div className=\"flex items-center space-x-2\">
-                <div className=\"w-4 h-4 bg-orange-100 border border-orange-300 rounded\"></div>
-                <span>Próximo a vencer</span>
-              </div>
-            </div>
-
-            {/* Tabla de productos */}
-            <div className=\"bg-white rounded-lg shadow overflow-hidden\">
-              <div className=\"overflow-x-auto\">
-                <table className=\"min-w-full divide-y divide-gray-200\">
-                  <thead className=\"bg-gray-50\">
-                    <tr>
-                      <th className=\"px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider\">Código</th>
-                      <th className=\"px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider\">Descripción</th>
-                      <th className=\"px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider\">Unidad</th>
-                      <th className=\"px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider\">Stock</th>
-                      <th className=\"px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider\">Precio</th>
-                      <th className=\"px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider\">F. Ingreso</th>
-                      <th className=\"px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider\">F. Vencimiento</th>
-                      <th className=\"px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider\">Acciones</th>
-                    </tr>
-                  </thead>
-                  <tbody className=\"bg-white divide-y divide-gray-200\">
-                    {productosFiltrados.map((producto) => (
-                      <tr key={producto.id} className={`${getRowColor(producto)} hover:bg-opacity-75 transition-colors`}>
-                        <td className=\"px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900\">{producto.codigo}</td>
-                        <td className=\"px-6 py-4 text-sm text-gray-900\">{producto.descripcion}</td>
-                        <td className=\"px-6 py-4 whitespace-nowrap text-sm text-gray-500\">{producto.unidad_venta}</td>
-                        <td className=\"px-6 py-4 whitespace-nowrap text-sm font-medium\">
-                          <span className={producto.stock_actual === 0 ? 'text-red-600' : producto.stock_actual < configuracion.stock_bajo_limite ? 'text-yellow-600' : 'text-gray-900'}>
-                            {producto.stock_actual}
-                          </span>
-                        </td>
-                        <td className=\"px-6 py-4 whitespace-nowrap text-sm text-gray-900\">${producto.precio_venta.toFixed(2)}</td>
-                        <td className=\"px-6 py-4 whitespace-nowrap text-sm text-gray-500\">
-                          {producto.fecha_ingreso ? new Date(producto.fecha_ingreso).toLocaleDateString() : '-'}
-                        </td>
-                        <td className=\"px-6 py-4 whitespace-nowrap text-sm text-gray-500\">
-                          {producto.fecha_vencimiento ? new Date(producto.fecha_vencimiento).toLocaleDateString() : '-'}
-                        </td>
-                        <td className=\"px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2\">
-                          <button
-                            onClick={() => editarItem(producto, 'producto')}
-                            className=\"text-blue-600 hover:text-blue-900 transition-colors\"
-                          >
-                            ✏️ Editar
-                          </button>
-                          <button
-                            onClick={() => eliminarProducto(producto.id)}
-                            className=\"text-red-600 hover:text-red-900 transition-colors\"
-                          >
-                            🗑️ Eliminar
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-                {productosFiltrados.length === 0 && (
-                  <div className=\"text-center py-8 text-gray-500\">
-                    No se encontraron productos
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-        )}
-  const [activeTab, setActiveTab] = useState('inventario');
-  const [productos, setProductos] = useState([]);
-  const [contactos, setContactos] = useState([]);
-  const [alertas, setAlertas] = useState([]);
-  const [configuracion, setConfiguracion] = useState({ stock_bajo_limite: 10, vencimiento_alerta_meses: 2 });
-  const [loading, setLoading] = useState(false);
-  const [showModal, setShowModal] = useState(false);
-  const [modalType, setModalType] = useState(''); // 'producto' o 'contacto'
-  const [editingItem, setEditingItem] = useState(null);
-  const [searchTerm, setSearchTerm] = useState('');
-
-  // Estados para el formulario de producto
-  const [productoForm, setProductoForm] = useState({
-    codigo: '',
-    descripcion: '',
-    unidad_venta: 'Unidades',
-    stock_actual: 0,
-    precio_venta: 0,
-    fecha_ingreso: '',
-    fecha_vencimiento: ''
-  });
-
-  // Estados para el formulario de contacto
-  const [contactoForm, setContactoForm] = useState({
-    nombre: '',
-    direccion: '',
-    telefono: '',
-    correo: '',
-    tipo: 'Proveedor'
-  });
-
-  // Cargar datos iniciales
-  useEffect(() => {
-    cargarDatos();
-  }, []);
-
-  const cargarDatos = async () => {
-    setLoading(true);
-    try {
-      const [productosRes, contactosRes, alertasRes, configRes] = await Promise.all([
-        axios.get(`${API}/productos`),
-        axios.get(`${API}/contactos`),
-        axios.get(`${API}/alertas`),
-        axios.get(`${API}/configuracion`)
-      ]);
-      
-      setProductos(productosRes.data);
-      setContactos(contactosRes.data);
-      setAlertas(alertasRes.data);
-      setConfiguracion(configRes.data);
-    } catch (error) {
-      console.error('Error cargando datos:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // Función para obtener el color de fila según las alertas
-  const getRowColor = (producto) => {
-    if (producto.stock_actual === 0) return 'bg-red-100 border-red-300';
-    if (producto.stock_actual < configuracion.stock_bajo_limite) return 'bg-yellow-100 border-yellow-300';
-    
-    if (producto.fecha_vencimiento) {
-      const fechaVencimiento = new Date(producto.fecha_vencimiento);
-      const fechaLimite = new Date();
-      fechaLimite.setMonth(fechaLimite.getMonth() + configuracion.vencimiento_alerta_meses);
-      
-      if (fechaVencimiento <= fechaLimite) return 'bg-orange-100 border-orange-300';
-    }
-    
-    return 'bg-white border-gray-200';
-  };
-
-  // Productos filtrados
-  const productosFiltrados = useMemo(() => {
-    return productos.filter(producto => 
-      producto.codigo.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      producto.descripcion.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-  }, [productos, searchTerm]);
-
-  // Contactos filtrados
-  const contactosFiltrados = useMemo(() => {
-    return contactos.filter(contacto => 
-      contacto.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      (contacto.correo && contacto.correo.toLowerCase().includes(searchTerm.toLowerCase()))
-    );
-  }, [contactos, searchTerm]);
-
-  // Manejar envío del formulario de producto
-  const handleProductoSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    
-    try {
-      const data = {
-        ...productoForm,
-        stock_actual: parseInt(productoForm.stock_actual) || 0,
-        precio_venta: parseFloat(productoForm.precio_venta) || 0,
-        fecha_ingreso: productoForm.fecha_ingreso || null,
-        fecha_vencimiento: productoForm.fecha_vencimiento || null
-      };
-
-      if (editingItem) {
-        await axios.put(`${API}/productos/${editingItem.id}`, data);
-      } else {
-        await axios.post(`${API}/productos`, data);
-      }
-      
-      setShowModal(false);
-      setEditingItem(null);
-      resetProductoForm();
-      await cargarDatos();
-    } catch (error) {
-      console.error('Error guardando producto:', error);
-      alert('Error guardando producto');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // Manejar envío del formulario de contacto
-  const handleContactoSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    
-    try {
-      if (editingItem) {
-        await axios.put(`${API}/contactos/${editingItem.id}`, contactoForm);
-      } else {
-        await axios.post(`${API}/contactos`, contactoForm);
-      }
-      
-      setShowModal(false);
-      setEditingItem(null);
-      resetContactoForm();
-      await cargarDatos();
-    } catch (error) {
-      console.error('Error guardando contacto:', error);
-      alert('Error guardando contacto');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // Eliminar producto
-  const eliminarProducto = async (id) => {
-    if (window.confirm('¿Estás seguro de eliminar este producto?')) {
-      try {
-        await axios.delete(`${API}/productos/${id}`);
-        await cargarDatos();
-      } catch (error) {
-        console.error('Error eliminando producto:', error);
-        alert('Error eliminando producto');
-      }
-    }
-  };
-
-  // Eliminar contacto
-  const eliminarContacto = async (id) => {
-    if (window.confirm('¿Estás seguro de eliminar este contacto?')) {
-      try {
-        await axios.delete(`${API}/contactos/${id}`);
-        await cargarDatos();
-      } catch (error) {
-        console.error('Error eliminando contacto:', error);
-        alert('Error eliminando contacto');
-      }
-    }
-  };
-
-  // Editar item
-  const editarItem = (item, tipo) => {
-    setEditingItem(item);
-    setModalType(tipo);
-    
-    if (tipo === 'producto') {
-      setProductoForm({
-        codigo: item.codigo || '',
-        descripcion: item.descripcion || '',
-        unidad_venta: item.unidad_venta || 'Unidades',
-        stock_actual: item.stock_actual || 0,
-        precio_venta: item.precio_venta || 0,
-        fecha_ingreso: item.fecha_ingreso || '',
-        fecha_vencimiento: item.fecha_vencimiento || ''
-      });
-    } else {
-      setContactoForm({
-        nombre: item.nombre || '',
-        direccion: item.direccion || '',
-        telefono: item.telefono || '',
-        correo: item.correo || '',
-        tipo: item.tipo || 'Proveedor'
-      });
-    }
-    
-    setShowModal(true);
-  };
-
-  // Abrir modal para nuevo item
-  const abrirModalNuevo = (tipo) => {
-    setEditingItem(null);
-    setModalType(tipo);
-    if (tipo === 'producto') {
-      resetProductoForm();
-    } else {
-      resetContactoForm();
-    }
-    setShowModal(true);
-  };
-
-  const resetProductoForm = () => {
-    setProductoForm({
-      codigo: '',
-      descripcion: '',
-      unidad_venta: 'Unidades',
-      stock_actual: 0,
-      precio_venta: 0,
-      fecha_ingreso: '',
-      fecha_vencimiento: ''
-    });
-  };
-
-  const resetContactoForm = () => {
-    setContactoForm({
-      nombre: '',
-      direccion: '',
-      telefono: '',
-      correo: '',
-      tipo: 'Proveedor'
-    });
-  };
-
-  // Actualizar configuración
-  const actualizarConfiguracion = async (nuevaConfig) => {
-    try {
-      await axios.put(`${API}/configuracion`, nuevaConfig);
-      setConfiguracion(prev => ({ ...prev, ...nuevaConfig }));
-      await cargarDatos(); // Recargar para actualizar alertas
-    } catch (error) {
-      console.error('Error actualizando configuración:', error);
-    }
-  };
-
-  return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
+      {/* Header with User Info */}
       <div className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             <h1 className="text-2xl font-bold text-gray-900">📦 Gestión de Inventario</h1>
-            <div className="text-sm text-gray-500">
-              Total productos: {productos.length} | Alertas: {alertas.length}
+            <div className="flex items-center space-x-4">
+              <div className="text-sm text-gray-600">
+                Total productos: {productos.length} | Alertas: {alertas.length}
+              </div>
+              <div className="flex items-center space-x-3">
+                <div className="text-sm">
+                  <span className="text-gray-500">Bienvenido,</span>
+                  <span className="font-medium text-gray-900 ml-1">{user?.nombre_completo || user?.username}</span>
+                </div>
+                <button
+                  onClick={logout}
+                  className="text-sm bg-red-100 text-red-700 px-3 py-1 rounded-md hover:bg-red-200 transition-colors"
+                >
+                  Cerrar Sesión
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -1069,7 +675,6 @@ const InventoryApp = () => {
               </button>
             </div>
 
-            {/* Tabla de contactos */}
             <div className="bg-white rounded-lg shadow overflow-hidden">
               <div className="overflow-x-auto">
                 <table className="min-w-full divide-y divide-gray-200">
@@ -1133,7 +738,6 @@ const InventoryApp = () => {
               <p className="text-gray-600">Productos que requieren atención inmediata</p>
             </div>
 
-            {/* Alertas por categoría */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
               <div className="bg-red-50 border border-red-200 rounded-lg p-4">
                 <h3 className="text-lg font-medium text-red-900 mb-2">🚨 Stock Agotado</h3>
@@ -1160,7 +764,6 @@ const InventoryApp = () => {
               </div>
             </div>
 
-            {/* Lista detallada de alertas */}
             <div className="bg-white rounded-lg shadow overflow-hidden">
               <div className="px-6 py-4 border-b border-gray-200">
                 <h3 className="text-lg font-medium text-gray-900">Detalle de Alertas</h3>
@@ -1301,7 +904,6 @@ const InventoryApp = () => {
             <form onSubmit={modalType === 'producto' ? handleProductoSubmit : handleContactoSubmit}>
               <div className="px-6 py-4 space-y-4">
                 {modalType === 'producto' ? (
-                  // Formulario de producto
                   <>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">Código *</label>
@@ -1385,7 +987,6 @@ const InventoryApp = () => {
                     </div>
                   </>
                 ) : (
-                  // Formulario de contacto
                   <>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">Nombre *</label>
@@ -1478,6 +1079,28 @@ const InventoryApp = () => {
       )}
     </div>
   );
+};
+
+// Main App with Auth Provider
+const App = () => (
+  <AuthProvider>
+    <AppContent />
+  </AuthProvider>
+);
+
+// Main App Content Component
+const AppContent = () => {
+  const { user, loading } = useAuth();
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
+
+  return user ? <InventoryApp /> : <LoginForm />;
 };
 
 export default App;
