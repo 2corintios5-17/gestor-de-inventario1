@@ -95,6 +95,8 @@ class Usuario(BaseModel):
     username: str
     nombre_completo: str
     hashed_password: str
+    rol: str = "usuario"  # "maestro" o "usuario"
+    estado: str = "pendiente"  # "pendiente", "aprobado", "rechazado"
     activo: bool = True
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
@@ -102,6 +104,16 @@ class UsuarioCreate(BaseModel):
     username: str
     nombre_completo: str
     password: str
+
+class UsuarioUpdate(BaseModel):
+    nombre_completo: Optional[str] = None
+    rol: Optional[str] = None
+    estado: Optional[str] = None
+    activo: Optional[bool] = None
+
+class PasswordChange(BaseModel):
+    user_id: str
+    new_password: str
 
 class UsuarioLogin(BaseModel):
     username: str
@@ -111,6 +123,36 @@ class Token(BaseModel):
     access_token: str
     token_type: str
     user: dict
+
+class Cliente(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    nombre: str
+    ruc: Optional[str] = None
+    direccion: Optional[str] = None
+    telefono: Optional[str] = None
+    email: Optional[str] = None
+    horario_visita: Optional[str] = None  # JSON string con días y horas
+    notas: Optional[str] = None
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+
+class ClienteCreate(BaseModel):
+    nombre: str
+    ruc: Optional[str] = None
+    direccion: Optional[str] = None
+    telefono: Optional[str] = None
+    email: Optional[str] = None
+    horario_visita: Optional[str] = None
+    notas: Optional[str] = None
+
+class ClienteUpdate(BaseModel):
+    nombre: Optional[str] = None
+    ruc: Optional[str] = None
+    direccion: Optional[str] = None
+    telefono: Optional[str] = None
+    email: Optional[str] = None
+    horario_visita: Optional[str] = None
+    notas: Optional[str] = None
 
 class Producto(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
